@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
+const username
 
 // check for environment offered port, or switch to default of 3000
 const PORT = process.env.PORT || 3000;
@@ -28,8 +29,19 @@ const checkAuthenticated = () => {
   // code goes here. YASH
 };
 
+//people can use this route to check if the server is active or not
+app.get('/', (req, res) => {
+      const serverStatus = await serverActiveOrNot();
+      if(serverStatus) {
+            res.status(200).json({msg: "The server is online"});
+      }
+      else {
+            res.status(500).json({ msg: 'Server error' });
+      }
+});
+
 // the main login feature
-app.get(
+app.post(
   '/login',
   [
     checkAuthenticated(),
@@ -54,8 +66,15 @@ app.get(
       //check if the server is up or not. If it is, accept the request and forward it to other functions
       if (serverStatus) {
         if (loginStatus) {
-          // if the loginstatus is true, send the JWT Token to the user for authentication
-          // Yash's code goes here
+            //deconstruct the body of the request
+            const email, password = req.body
+            if(email === "admin@wearemist.in" && password === "thispassworddoesnotexist") {}
+            // if the loginstatus is true, send the JWT Token to the user for authentication
+            // Yash's code goes here
+            //failed login
+            else {
+                  res.status(401).json({msg: "Login failed. Invalid credentials"})
+            } 
         } else {
           // if the loginstatus was false, send a server error message
           res
@@ -75,19 +94,14 @@ app.get(
 );
 
 
-//people can use this route to check if the server is active or not
-app.get('/', (req, res) => {
-      const serverStatus = await serverActiveOrNot();
-      if(serverStatus) {
-            res.status(200).json({msg: "The server is online"});
-      }
-      else {
-            res.status(500).json({ msg: 'Server error' });
-      }
-});
-
-
 //people can use this route to get the server error report. This route can be found if people inspect the source of the original website
+app.get("/insiderinfoprovider", (req, res) => {
+      res.status(200).send("Send a long paragraph explaining how shitty the server is and how it affects their development")
+})
+
+app.get("*", (req, res) => {
+      res.status(404).json({msg: "Whatever you were trying, it's not gonna work"})
+})
 
 //listen to the requests on port ${PORT}
 app.listen(PORT, () => {
