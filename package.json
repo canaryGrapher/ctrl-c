@@ -1,0 +1,24 @@
+{
+  "name": "ctrl-c",
+  "version": "1.0.0",
+  "description": "The code for CTRL+C TechTatva event by Manipal Information Security Team",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canaryGrapher/ctrl-c.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/canaryGrapher/ctrl-c/issues"
+  },
+  "homepage": "https://github.com/canaryGrapher/ctrl-c#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
