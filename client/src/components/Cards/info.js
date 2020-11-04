@@ -23,7 +23,7 @@ const InfoGrid = () => {
   return (
     <div class="row" style={{ flexGrow: '1' }}>
       {/* <div className="row"> */}
-      <div className="info-card info-column hidden animate__animated animate__flash">
+      <div className="col-md-6 hidden animate__animated animate__flash">    {/* CHANGED HERE TOO */}
         <CreateInfoCard
           card={{
             heading: 'XYZ HAHAH',
@@ -32,7 +32,7 @@ const InfoGrid = () => {
           }}
         />
       </div>
-      <div className="info-card info-column hidden animate__animated animate__flash">
+      <div className="col-md-6 hidden animate__animated animate__flash">    {/* CHANGED HERE TOO */}
         <CreateInfoCard
           card={{
             heading: 'HAHAH XYZ',

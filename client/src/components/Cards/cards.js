@@ -97,12 +97,12 @@ const CardGrid = () => {
   }
 
   return (
-    <div className={classes.root}>
-      <div className="row">
-        <div className="column hidden animate__animated animate__fadeInLeft">
+    // I CHANGED THE CODE HERE  -------------
+      <div class="row">
+          <div class="col-md-3 my-4">
           <CreateLoginCard />
-        </div>
-        <div className="column hidden animate__animated animate__pulse">
+          </div>
+          <div class="col-md-3 my-4 card-column">
           <CreateCard
             card={{
               card: cardOne,
@@ -111,29 +111,29 @@ const CardGrid = () => {
                 "Hi. I am a card. A credit card, a debit card, or maybe even an ATM card. I really don't know what type of card I am. You can spend and find out. But the question here really is—will you?"
             }}
           />
-        </div>
-        <div className="column hidden animate__animated animate__pulse">
+          </div>
+          <div class="col-md-3 my-4 card-column">
           <CreateCard
             card={{
               card: cardTwo,
-              price: '3458',
+              price: '1729',
               details:
                 "Hi. I am a card. A credit card, a debit card, or maybe even an ATM card. I really don't know what type of card I am. You can spend and find out. But the question here really is—will you?"
             }}
           />
-        </div>
-        <div className="column hidden animate__animated animate__pulse">
+          </div>
+          <div class="col-md-3 my-4 card-column">
           <CreateCard
             card={{
               card: cardThree,
-              price: '6916',
+              price: '1729',
               details:
                 "Hi. I am a card. A credit card, a debit card, or maybe even an ATM card. I really don't know what type of card I am. You can spend and find out. But the question here really is—will you?"
             }}
           />
+          </div>
         </div>
-      </div>
-    </div>
+    // CODE CHANGED TILL HERE
   );
 };
 
