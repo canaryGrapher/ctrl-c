@@ -5,6 +5,7 @@ import './../Cards/cards.css';
 import { FontSizes } from '@fluentui/theme';
 import { loadTheme } from '@fluentui/react';
 import InfoGrid from '../Cards/info';
+import BankApp from '../BankApp/BankApp';
 
 // defining a custom theme for Fluent UI 
 loadTheme({
@@ -55,7 +56,15 @@ const Landing = () => {
         </div>
       </div>
       {/* code for the cards section ends here */}
-    
+      {/* code for the app section starts here */}
+      <div class="wrapper">
+      <div class="curved">
+        <div class="banner animate__animated hidden animate__headShake" style={{fontSize: FontSizes.size42}}>
+            Mobile App
+        </div>
+        <BankApp/>
+      </div>
+      </div>
     </div>
   );
 };
