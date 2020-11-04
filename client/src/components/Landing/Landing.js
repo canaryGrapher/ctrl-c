@@ -5,6 +5,7 @@ import MainLanding from './MainLanding';
 import Navbar from '../Navbar';
 
 const Landing = () => {
+
   return (
     <Fragment>
       <Navbar />
