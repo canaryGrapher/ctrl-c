@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { PrimaryButton, TextField } from '@fluentui/react/lib';
+import MainLanding from './MainLanding';
+import Navbar from '../Navbar';
 
 const Landing = () => {
   return (
-    <div>
-      <h1>This is nothing</h1>
-      <Link to="/privacypolicy">
-        <button>Privacy Policy</button>
-      </Link>
-    </div>
+    <Fragment>
+      <Navbar />
+      <MainLanding />
+    </Fragment>
   );
 };
 

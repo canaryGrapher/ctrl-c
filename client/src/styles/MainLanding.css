@@ -1,0 +1,15 @@
+.top-container {
+  background-image: url('../Resources/background.png');
+}
+
+#loginRedirectButton {
+  width: fit-content;
+  border-radius: 50px;
+  box-shadow: 10px 10px 60px #000333;
+}
+
+#loginRedirectButton:hover {
+  box-shadow: none;
+  background-color: red;
+}
+
