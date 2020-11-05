@@ -32,21 +32,34 @@ class CardGrid extends Component {
       email: this.state.username,
       password: this.state.password
     };
-    axios
-      .post(`http://localhost:3002/login`, { user })
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          message: res.data.msg,
-          style: 'text-success text-center',
-          token: res.data.token
+    if (this.state.password !== '' && this.state.username !== '') {
+      axios
+        .post(`http://localhost:3002/login`, { user })
+        .then((res) => {
+          console.log(res);
+          this.setState({
+            message: res.data.msg,
+            style: 'text-success text-center',
+            token: res.data.token
+          });
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.msg);
+          this.setState({
+            message: error.response.data.msg,
+            style: 'text-danger text-center'
+          });
         });
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error.response.data.msg);
-        this.setState({message: error.response.data.msg, style: "text-danger text-center"});
+    } else {
+      this.setState({
+     
+          message: 'Incomplete form',
+  
+             style: 'text-center text-warning'
+      
       });
+    }
   }
   render() {
     return (
