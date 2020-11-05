@@ -12,7 +12,9 @@ class CardGrid extends Component {
     this.state = {
       username: '',
       password: '',
-      response: null
+      message: null,
+      style: null,
+      token: null
     };
     this.changeUsername = this.changeUsername.bind(this);
     this.changePassword = this.changePassword.bind(this);
@@ -34,7 +36,16 @@ class CardGrid extends Component {
       .post(`http://localhost:3002/login`, { user })
       .then((res) => {
         console.log(res);
+        this.setState({
+          message: res.data.msg,
+          style: 'text-success text-center',
+          token: res.data.token
+        });
         console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error.response.data.msg);
+        this.setState({message: error.response.data.msg, style: "text-danger text-center"});
       });
   }
   render() {
@@ -75,6 +86,7 @@ class CardGrid extends Component {
               >
                 Login
               </CompoundButton>
+              <p className={this.state.style}>{this.state.message}</p>
             </div>
           </div>
           <div className="col-md-8 col-12 d-flex flex-column justify-content-center">

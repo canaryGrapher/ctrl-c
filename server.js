@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //off time container array
 let continueOrNot;
-const serverOffTime = [20, 21, 2, 3, 8, 9, 13, 14]; //assuming the server goes up at 1500 hours
+const serverOffTime = [21, 22, 03, 04, 09, 10, 11, 12, 17, 18]; //assuming the server goes up at 1700 hours
 
 //function to determine if the server should send a server error message or continue processing the request
 const serverActiveOrNot = () => {
@@ -88,7 +88,8 @@ app.post('/login', async (req, res) => {
             { expiresIn: 360000 },
             (err, token) => {
               if (err) throw err;
-              res.json({ token });
+              console.log(token);
+              res.status(200).json({ token: token, msg: 'Logged in' });
             }
           );
         }
@@ -120,12 +121,20 @@ app.get('/insiderinfoprovider', (req, res) => {
   res
     .status(200)
     .send(
-      'Send a long paragraph explaining how shitty the server is and how it affects their development'
+      'The servers run for 4 hours, and then close for the next 2, start time for this cycle is 1700hrs, IST. There is a 30% probability that the servers will deny you access, even if your credentials are correct.'
     );
 });
 
 //this is the data the contestants have to extract. Populate it with pseudo-bank details. Getting this would earn them bonus points.
-app.get('/getTheExtractedData', auth, (req, res) => {});
+app.get('/getTheExtractedData', auth, (req, res) => {
+  res.status(200).json({
+    msg: 'Welcome to your account.',
+    bankAccountNumber: '21453254632',
+    balance: '$353623622',
+    phoneNumber: '+91 1235431239',
+    ssn: '23523463242'
+  });
+});
 
 app.get('*', (req, res) => {
   res
