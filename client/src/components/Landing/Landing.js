@@ -3,9 +3,9 @@ import MainLanding from './MainLanding';
 import Navbar from '../Navbar';
 import InfoGrid from '../Cards/info';
 import CardGrid from './../Cards/cards';
-import './../Cards/cards.css';
-import { FontSizes } from '@fluentui/theme';
 import { loadTheme } from '@fluentui/react';
+import BankApp from '../BankApp/BankApp';
+import Footer from '../Footer';
 
 // defining a custom theme for Fluent UI
 loadTheme({
@@ -40,18 +40,10 @@ const Landing = () => {
     <Fragment>
       <Navbar />
       <MainLanding />
-      <div class="wrapper">
-        <div class="curved">
-          <div
-            class="banner animate__animated hidden animate__headShake"
-            style={{ fontSize: FontSizes.size42 }}
-          >
-            OFFERS
-          </div>
-          <CardGrid />
-          <InfoGrid />
-        </div>
-      </div>
+      <CardGrid />
+      <InfoGrid />
+      <BankApp />
+      <Footer />
     </Fragment>
   );
 };

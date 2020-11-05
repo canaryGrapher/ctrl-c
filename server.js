@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 const config = require('config');
-const { check, validationResult } = require('express-validator');
 // authenticated status checking module
 const auth = require('./authentication/auth');
 const rn = require('random-number');
@@ -12,16 +12,16 @@ const options = {
 };
 
 // check for environment offered port, or switch to default of 3000
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 const app = express();
-
+app.use(cors());
 //setting up middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //off time container array
 let continueOrNot;
-const serverOffTime = [21, 22, 03, 04, 09, 10, 11, 12, 17, 18]; //assuming the server goes up at 1700 hours
+const serverOffTime = [20, 21, 2, 3, 8, 9, 13, 14]; //assuming the server goes up at 1500 hours
 
 //function to determine if the server should send a server error message or continue processing the request
 const serverActiveOrNot = () => {
@@ -57,72 +57,63 @@ app.get('/', async (req, res) => {
 });
 
 // the main login feature
-app.post(
-  '/login',
-  [
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Please enter a valid password').isLength({ min: 6 })
-  ],
-  async (req, res) => {
-    //checking if the user input is correct, user input sanitization
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      console.log(errors);
-      return res.status(400).json({ errors: errors.array() });
-    }
+app.post('/login', async (req, res) => {
+  //checking if the user input is correct, user input sanitization
+  console.log(req.body);
 
-    //enclosing the code in a try-catch block
-    try {
-      // getting the server status from the functions
-      const serverStatus = serverActiveOrNot();
-      const loginStatus = logInOrNot();
-      //check if the server is up or not. If it is, accept the request and forward it to other functions
-      if (serverStatus) {
-        if (loginStatus) {
-          //deconstructing the body of the request
-          const { email, password } = req.body;
-          if (
-            email === config.get('email') &&
-            password === config.get('password')
-          ) {
-            const payload = {
-              user: {
-                id: config.get('email')
-              }
-            };
-            jwt.sign(
-              payload,
-              config.get('jwtSecret'),
-              { expiresIn: 360000 },
-              (err, token) => {
-                if (err) throw err;
-                res.json({ token });
-              }
-            );
-          }
-          // if the loginstatus is true, send the JWT Token to the user for authentication
-          // Yash's code goes here
-          //failed login
-          else {
-            res.status(401).json({ msg: 'Login failed. Invalid credentials' });
-          }
-        } else {
-          // if the loginstatus was false, send a server error message
-          res
-            .status(504)
-            .json({ msg: 'Our primary servers took too long to respond.' });
+  //enclosing the code in a try-catch block
+  try {
+    // getting the server status from the functions
+    const serverStatus = serverActiveOrNot();
+    const loginStatus = logInOrNot();
+    //check if the server is up or not. If it is, accept the request and forward it to other functions
+    if (serverStatus) {
+      if (loginStatus) {
+        //deconstructing the body of the request
+        const { email, password } = req.body.user;
+        console.log(email, password);
+        if (
+          email === config.get('email') &&
+          password === config.get('password')
+        ) {
+          console.log("Password matched")
+          const payload = {
+            user: {
+              id: config.get('email')
+            }
+          };
+          jwt.sign(
+            payload,
+            config.get('jwtSecret'),
+            { expiresIn: 360000 },
+            (err, token) => {
+              if (err) throw err;
+              res.json({ token });
+            }
+          );
         }
+        // if the loginstatus is true, send the JWT Token to the user for authentication
+        // Yash's code goes here
+        //failed login
+        else {
+          res.status(401).json({ msg: 'Login failed. Invalid credentials' });
+        }
+      } else {
+        // if the loginstatus was false, send a server error message
+        res
+          .status(504)
+          .json({ msg: 'Our primary servers took too long to respond.' });
       }
-      // if the server is down, send server unavailable error code.
-      else {
-        res.status(503).json({ msg: 'Server Unavailable' });
-      }
-    } catch (err) {
-      // send an error if there was actually an error in the server
-      res.status(500).json({ msg: 'There was an error' });
     }
+    // if the server is down, send server unavailable error code.
+    else {
+      res.status(503).json({ msg: 'Server Unavailable' });
+    }
+  } catch (err) {
+    // send an error if there was actually an error in the server
+    res.status(500).json({ msg: 'There was an error' });
   }
-);
+});
 
 //people can use this route to get the server error report. This route can be found if people inspect the source of the original website
 app.get('/insiderinfoprovider', (req, res) => {

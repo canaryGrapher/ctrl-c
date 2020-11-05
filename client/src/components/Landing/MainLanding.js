@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import '../../styles/MainLanding.css';
 import { Text } from '@fluentui/react/lib';
-import phone from '../../Resources/phone.png';
+import video from '../../Resources/mockup.mp4';
 import { CompoundButton } from '@fluentui/react/lib';
 
 const MainLanding = () => {
@@ -11,9 +11,10 @@ const MainLanding = () => {
         className="top-container pt-5"
         style={{
           height: '100vh',
-          width: '100%',
+          width: '100vw',
           backgroundPosition: 'center',
-          backgroundSize: 'cover'
+          backgroundSize: 'cover',
+          overflowX: 'hidden'
         }}
       >
         <div className="row">
@@ -38,32 +39,35 @@ const MainLanding = () => {
               <h1 className="d-md-none text-light font-weight-bold">
                 peace of mind
               </h1>
-              {/* <button className="mt-5" id="loginRedirectButton">
-                <span className="font-weight-bold">My account</span>
-              </button> */}
-              <div className="row pl-3">
+              <div className="h-full d-flex flex-column justify-content-center mt-4">
+                <h5 className="text-white pl-3">
+                  World's number 1 financing company
+                </h5>
+              </div>
+              <div className="row-fluid">
                 <CompoundButton
-                  secondaryText="Login to user portal"
+                  secondaryText="12,124,124 happy customers"
                   className="mt-4 rounded btn-light mx-auto mx-md-2"
                   style={{ width: 'fit-content' }}
                 >
-                  BankScape Portal
+                  BankScape Homepage
                 </CompoundButton>
-                <div className="h-full d-flex flex-column justify-content-center mt-4">
-                  <h5 className="text-white pl-3">
-                    World's number one financing company
-                  </h5>
-                </div>
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-6 d-flex flex-column justify-content-center text-align-center">
-            <div className="d-flex flex-row justify-content-center">
-              <img
-                src={phone}
-                alt=""
-                className="img"
-                style={{ height: '80vh', width: '22vw' }}
+          <div className="col-12 col-md-6 d-none d-md-flex flex-column justify-content-center text-align-center">
+            <div className="d-flex flex-row justify-content-center pt-2">
+              <video
+                src={video}
+                controls="false"
+                autoPlay
+                loop={true}
+                muted
+                style={{
+                  borderRadius: '15px',
+                  borderWidth: '15px 3px 15px 3px',
+                  borderStyle: 'solid'
+                }}
               />
             </div>
           </div>

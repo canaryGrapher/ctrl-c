@@ -13,3 +13,11 @@
   background-color: red;
 }
 
+video::-webkit-media-controls {
+  display: none;
+}
+
+video {
+  width: min-width;
+  height: 80vh;
+}

@@ -1,140 +1,123 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { FontSizes } from '@fluentui/theme';
+import React, { Component } from 'react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { CompoundButton } from 'office-ui-fabric-react';
-import cardOne from './images/cardOne.png';
-import cardTwo from './images/cardTwo.png';
-import cardThree from './images/cardThree.png';
+import Wine from '../../Resources/wine.jpg';
+import Mansion from '../../Resources/mansion.jpg';
+import axios from 'axios';
 import 'animate.css';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    height: 550
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: 'left',
-    width: 430,
-    color: theme.palette.text.secondary,
-    height: 500,
-    borderRadius: 10
-  },
-  loginPaper: {
-    padding: theme.spacing(1),
-    textAlign: 'left',
-    color: theme.palette.text.secondary,
-    width: 430,
-    height: 500
-  },
-  marginClass: {
-    marginLeft: 10
+class CardGrid extends Component {
+  constructor() {
+    super();
+    this.state = {
+      username: '',
+      password: '',
+      response: null
+    };
+    this.changeUsername = this.changeUsername.bind(this);
+    this.changePassword = this.changePassword.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-}));
-
-const CardGrid = () => {
-  const classes = useStyles();
-
-  //creates card
-  function CreateCard({ card }) {
-    return (
-      <Grid item xs={3}>
-        <Paper elevation={10} className={[classes.paper]}>
-          <div className="image hidden animate__animated animate__fadeIn">
-            <img height={250} width={400} src={card.card} alt="card" />
-          </div>
-          <div className="cost">
-            {' '}
-            <span style={{ fontSize: FontSizes.size32 }}>$ </span>
-            <span style={{ fontSize: FontSizes.size42 }}>{card.price}</span>
-          </div>
-          <div
-            className="info-text"
-            style={{
-              padding: 20,
-              fontWeight: 'bold',
-              color: 'rgb(122, 122, 235)'
-            }}
-          >
-            <p>{card.details}</p>
-          </div>
-        </Paper>
-      </Grid>
-    );
+  changeUsername(username) {
+    this.setState({ username: username.target.value });
   }
-
-  //creates login card
-  function CreateLoginCard() {
+  changePassword(password) {
+    this.setState({ password: password.target.value });
+  }
+  handleSubmit(formData) {
+    formData.preventDefault();
+    const user = {
+      email: this.state.username,
+      password: this.state.password
+    };
+    axios
+      .post(`http://localhost:3002/login`, { user })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      });
+  }
+  render() {
     return (
-      <Grid item xs={3}>
-        <Paper elevation={10} className={classes.loginPaper}>
-          <div class="login" style={{ fontSize: FontSizes.size42 }}>
-            ACCOUNT LOGIN
-          </div>
-          <div style={{ marginTop: '15%', padding: '0 90px 0px 60px' }}>
-            <TextField underlined placeholder="Enter your email" />
-            <br />
-            <br />
-            <TextField
-              type="password"
-              underlined
-              placeholder="Enter your password"
-            />
-            <CompoundButton
-              primary
-              secondaryText="Code code code"
-              className="compoundButton"
+      <div className="container-fluid">
+        <div className="d-flex flex-column flex-md-row">
+          <div className="col-md-4 col-12 mb-4 mb-md-0 d-flex flex-column justify-content-center">
+            <div
+              className="card bg-white p-4 d-flex flex-column justify-content-center"
+              id="loginBox"
             >
-              Login
-            </CompoundButton>
+              <h1>
+                Login to
+                <TextField
+                  disabled
+                  defaultValue="Dashboard"
+                  type="email "
+                  className="mt-2"
+                />
+              </h1>
+              <TextField
+                label="Email"
+                placeholder="Enter your email"
+                onChange={this.changeUsername}
+              />
+              <TextField
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+                canRevealPassword
+                onChange={this.changePassword}
+              />
+              <CompoundButton
+                primary
+                secondaryText="Securely login to your account"
+                className="mt-3 mx-auto rounded"
+                onClick={this.handleSubmit}
+              >
+                Login
+              </CompoundButton>
+            </div>
           </div>
-        </Paper>
-      </Grid>
-    );
-  }
-
-  return (
-    <div className={classes.root}>
-      <div className="row">
-        <div className="column hidden animate__animated animate__fadeInLeft">
-          <CreateLoginCard />
-        </div>
-        <div className="column hidden animate__animated animate__pulse">
-          <CreateCard
-            card={{
-              card: cardOne,
-              price: '1729',
-              details:
-                "Hi. I am a card. A credit card, a debit card, or maybe even an ATM card. I really don't know what type of card I am. You can spend and find out. But the question here really is—will you?"
-            }}
-          />
-        </div>
-        <div className="column hidden animate__animated animate__pulse">
-          <CreateCard
-            card={{
-              card: cardTwo,
-              price: '3458',
-              details:
-                "Hi. I am a card. A credit card, a debit card, or maybe even an ATM card. I really don't know what type of card I am. You can spend and find out. But the question here really is—will you?"
-            }}
-          />
-        </div>
-        <div className="column hidden animate__animated animate__pulse">
-          <CreateCard
-            card={{
-              card: cardThree,
-              price: '6916',
-              details:
-                "Hi. I am a card. A credit card, a debit card, or maybe even an ATM card. I really don't know what type of card I am. You can spend and find out. But the question here really is—will you?"
-            }}
-          />
+          <div className="col-md-8 col-12 d-flex flex-column justify-content-center">
+            <div className="row py-3 flex-column-reverse flex-md-row">
+              <div className="col-12 col-md-6 d-flex flex-column justify-content-center">
+                <p>
+                  Only with BankScape's premium cards, you get unlimited
+                  benefits. Enjoy cheaper stays at five-stars and dine at
+                  expensive restaurants with priority reservations.
+                </p>
+              </div>
+              <div className="col-12 col-md-6">
+                <img
+                  className="img-fluid"
+                  src={Wine}
+                  alt="Wine"
+                  style={{ height: '30vh', width: 'auto' }}
+                />
+              </div>
+            </div>
+            <div className="row py-3">
+              <div className="col-12 col-md-6">
+                <img
+                  className="img-fluid"
+                  src={Mansion}
+                  alt="Wine"
+                  style={{ height: '30vh', width: 'auto' }}
+                />
+              </div>
+              <div className="col-12 col-md-6 d-flex flex-column justify-content-center">
+                <p>
+                  Wanted to own that fancy sports car, or that huge mansion? We
+                  have the cheapest interest rates for your expensive tastes.
+                  The higher you spend, the lower interest you pay on the loan.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+      // CODE CHANGED TILL HERE
+    );
+  }
+}
 
 export default CardGrid;
