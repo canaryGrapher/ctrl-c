@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import NavbarDark from './NavbarDark';
-import { Link } from 'react-dom';
+import { Link } from 'react-router-dom';
 import Footer from './Footer';
 const PrivacyPolicy = () => {
   return (
