@@ -34,7 +34,7 @@ class CardGrid extends Component {
     };
     if (this.state.password !== '' && this.state.username !== '') {
       axios
-        .post(`http://localhost:3002/login`, { user })
+        .post(`https://apictrl.wearemist.in/login`, { user })
         .then((res) => {
           console.log(res);
           this.setState({

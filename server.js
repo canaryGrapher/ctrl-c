@@ -52,7 +52,7 @@ app.get('/', async (req, res) => {
   if (serverStatus) {
     res.status(200).json({ msg: 'The server is online' });
   } else {
-    res.status(500).json({ msg: 'Server error' });
+    res.status(200).json({ msg: 'Server error' });
   }
 });
 
@@ -97,22 +97,22 @@ app.post('/login', async (req, res) => {
         // Yash's code goes here
         //failed login
         else {
-          res.status(401).json({ msg: 'Login failed. Invalid credentials' });
+          res.status(200).json({ msg: 'Login failed. Invalid credentials' });
         }
       } else {
         // if the loginstatus was false, send a server error message
         res
-          .status(504)
+          .status(200)
           .json({ msg: 'Our primary servers took too long to respond.' });
       }
     }
     // if the server is down, send server unavailable error code.
     else {
-      res.status(503).json({ msg: 'Server Unavailable' });
+      res.status(200).json({ msg: 'Server Unavailable' });
     }
   } catch (err) {
     // send an error if there was actually an error in the server
-    res.status(500).json({ msg: 'There was an error' });
+    res.status(200).json({ msg: 'There was an error' });
   }
 });
 
